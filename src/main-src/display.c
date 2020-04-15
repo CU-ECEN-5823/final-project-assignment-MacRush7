@@ -14,9 +14,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <string.h>
-#include "glib.h"
-#include "log.h"
-#include "display.h"
+#include <src/headers/display.h>
 #include "hardware/kit/common/drivers/display.h"
 
 
@@ -195,7 +193,8 @@ void displayInit()
 	}
 #if SCHEDULER_SUPPORTS_DISPLAY_UPDATE_EVENT
 #if TIMER_SUPPORTS_1HZ_TIMER_EVENT
-	timerEnable1HzSchedulerEvent(Scheduler_DisplayUpdate);
+	//timerEnable1HzSchedulerEvent(Scheduler_DisplayUpdate);
+	timerEnabled1HzSchedulerEvent = 1;
 #else
 #warning "Timer does not support scheduling 1Hz event.  Please implement for full display support"
 #endif
@@ -212,7 +211,15 @@ void displayInit()
  */
 bool displayUpdate()
 {
-	return false;
+	struct display_data *display = displayGetData();
+	display->last_extcomin_state_high = !display->last_extcomin_state_high;
+#if GPIO_SET_DISPLAY_EXT_COMIN_IMPLEMENTED
+	gpioSetDisplayExtcomin(display->last_extcomin_state_high);
+#else
+#warning "gpioSetDisplayExtcomin is not implemented.  Please implement for display support"
+#endif
+	LOG_DEBUG("Display extcomin state is now %s",display->last_extcomin_state_high ? "high" : "low");
+	return true;
 }
 
 #endif // ECEN5823_INCLUDE_DISPLAY_SUPPORT

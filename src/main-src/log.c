@@ -5,10 +5,7 @@
  *      Author: Dan Walkes
  */
 
-#include "retargetserial.h"
-#include "log.h"
-#include <stdbool.h>
-//#include "timer.h"
+#include <src/headers/log.h>
 
 #if INCLUDE_LOGGING
 /**
@@ -17,7 +14,8 @@
  */
 uint32_t loggerGetTimestamp(void)
 {
-	return 0;
+	uint32_t timestamp_log = letimer_TimeStampSet();
+	return timestamp_log;
 }
 
 /**
@@ -42,4 +40,22 @@ void logFlush(void)
 {
 	RETARGET_SerialFlush();
 }
+
+/*
+ * Logging a user-specified string
+ */
+
+void logString(char* mystring)
+{
+	logFlush();
+
+	RETARGET_SerialInit();
+	/**
+	 * See https://siliconlabs.github.io/Gecko_SDK_Doc/efm32g/html/group__RetargetIo.html#ga9e36c68713259dd181ef349430ba0096
+	 * RETARGET_SerialCrLf() ensures each linefeed also includes carriage return.  Without it, the first character is shifted in TeraTerm
+	 */
+	RETARGET_SerialCrLf(true);
+	LOG_INFO("%s", mystring);
+}
+
 #endif

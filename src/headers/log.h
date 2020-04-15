@@ -5,10 +5,11 @@
  *      Author: Dan Walkes
  */
 
-#ifndef SRC_LOG_H_
-#define SRC_LOG_H_
-#include "stdio.h"
-#include <inttypes.h>
+#ifndef SRC_HEADERS_LOG_H_
+#define SRC_HEADERS_LOG_H_
+
+/* Header File */
+#include "header.h"
 
 /**
  * Instructions for using this module:
@@ -72,7 +73,8 @@ void logFlush();
 #define LOG_DO(message,level, ...)
 static inline void logInit() {}
 static inline void logFlush() {}
+static inline void logString(char* mystring) {}
 #endif
 
 
-#endif /* SRC_LOG_H_ */
+#endif /* SRC_HEADERS_LOG_H_ */

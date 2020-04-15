@@ -19,12 +19,13 @@
  *		in your gpio.h file
  */
 
-#ifndef SRC_DISPLAY_H_
-#define SRC_DISPLAY_H_
+#ifndef SRC_HEADERS_DISPLAY_H_
+#define SRC_HEADERS_DISPLAY_H_
 
 #define ECEN5823_INCLUDE_DISPLAY_SUPPORT 1
 
 #include "glib.h"
+#include "header.h"
 
 enum display_row {
 	DISPLAY_ROW_NAME,
@@ -34,9 +35,11 @@ enum display_row {
 	DISPLAY_ROW_CONNECTION,
 	DISPLAY_ROW_PASSKEY,
 	DISPLAY_ROW_ACTION,
-	DISPLAY_ROW_TEMPVALUE,
+	DISPLAY_ROW_BUTTON_STAT,
 	DISPLAY_ROW_MAX,
 };
+
+uint8_t timerEnabled1HzSchedulerEvent;
 
 #if ECEN5823_INCLUDE_DISPLAY_SUPPORT
 void displayInit();
@@ -50,4 +53,4 @@ static inline void displayPrintf(enum display_row row, const char *format, ... )
 
 
 
-#endif /* SRC_DISPLAY_H_ */
+#endif /* SRC_HEADERS_DISPLAY_H_ */

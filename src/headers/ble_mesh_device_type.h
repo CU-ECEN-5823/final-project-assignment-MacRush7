@@ -7,8 +7,8 @@
 
 #include <stdbool.h>
 
-#ifndef SRC_BLE_MESH_DEVICE_TYPE_H_
-#define SRC_BLE_MESH_DEVICE_TYPE_H_
+#ifndef SRC_HEADERS_BLE_MESH_DEVICE_TYPE_H_
+#define SRC_HEADERS_BLE_MESH_DEVICE_TYPE_H_
 
 /**
  * Set to 1 to build an on/off publisher client model for Assignment 10
@@ -74,4 +74,4 @@ static inline bool DeviceIsOnOffSubscriber() { return true; }
 static inline bool DeviceIsOnOffSubscriber() { return false; }
 #endif
 
-#endif /* SRC_BLE_MESH_DEVICE_TYPE_H_ */
+#endif /* SRC_HEADERS_BLE_MESH_DEVICE_TYPE_H_ */

@@ -33,5 +33,6 @@ platform/service/sleeptimer/src \
 protocol/bluetooth/ble_stack/src/soc \
 protocol/bluetooth/bt_mesh/src \
 protocol/bluetooth/lib/EFR32XG13X/GCC \
+src/main-src \
 src \
 

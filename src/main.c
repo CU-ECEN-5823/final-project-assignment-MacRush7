@@ -47,7 +47,7 @@
 #include "bspconfig.h"
 #endif
 
-#include "src/ble_mesh_device_type.h"
+#include "src/headers/main.h"
 
 /***********************************************************************************************//**
  * @addtogroup Application
@@ -132,6 +132,9 @@ int main(void)
   initApp();
   initVcomEnable();
 
+  // Initialize peripherals
+  gecko_system_init();
+
   // Minimize advertisement latency by allowing the advertiser to always
   // interrupt the scanner.
   linklayer_priorities.scan_max = linklayer_priorities.adv_min + 1;
@@ -149,11 +152,28 @@ int main(void)
   // Initialize coexistence interface. Parameters are taken from HAL config.
   gecko_initCoexHAL();
 
-  while (1) {
+  while (1)
+  {
     struct gecko_cmd_packet *evt = gecko_wait_event();
     bool pass = mesh_bgapi_listener(evt);
-    if (pass) {
-      handle_ecen5823_gecko_event(BGLIB_MSG_ID(evt->header), evt);
+    if (pass)
+    {
+    	handle_ecen5823_gecko_event(BGLIB_MSG_ID(evt->header), evt);
     }
   }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION DEFINITIONS
+////////////////////////////////////////////////////////////////////////////////
+
+void gecko_system_init(void)
+{
+	  /* Initializing Peripherals and Configurations */
+	  gpioInit();
+	  pushButton_Init();
+	  cmu_Init();
+	  letimer_Init();
+	  logInit();
+	  displayInit();
 }
