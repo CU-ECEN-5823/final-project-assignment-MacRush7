@@ -33,6 +33,85 @@ void logInit(void)
 	LOG_INFO("Initialized Logging");
 }
 
+/*
+ * Log temperature readings after successful I2C communication with Si7021
+ */
+
+void logTemp(void)
+{
+	logFlush();
+
+	RETARGET_SerialInit();
+	/**
+	 * See https://siliconlabs.github.io/Gecko_SDK_Doc/efm32g/html/group__RetargetIo.html#ga9e36c68713259dd181ef349430ba0096
+	 * RETARGET_SerialCrLf() ensures each linefeed also includes carriage return.  Without it, the first character is shifted in TeraTerm
+	 */
+	RETARGET_SerialCrLf(true);
+	LOG_INFO("Temperature Reading (degree Celsius): %.3f C", temp_reading);
+}
+
+/*
+ * Log error status for i2cConnect() function in i2c.h
+ */
+
+void logI2CWriteReturns(int status)
+{
+	logFlush();
+
+	RETARGET_SerialInit();
+	/**
+	 * See https://siliconlabs.github.io/Gecko_SDK_Doc/efm32g/html/group__RetargetIo.html#ga9e36c68713259dd181ef349430ba0096
+	 * RETARGET_SerialCrLf() ensures each linefeed also includes carriage return.  Without it, the first character is shifted in TeraTerm
+	 */
+	RETARGET_SerialCrLf(true);
+
+	status += 5;
+
+	const char *logStatus[] =
+	{
+		"i2cTransferSwFault",
+		"i2cTransferUsageFault",
+		"i2cTransferArbLost",
+		"i2cTransferBusErr",
+		"i2cTransferNack",
+		"i2cTransferDone",
+		"i2cTransferInProgress"
+	};
+
+	LOG_INFO("I2CSPM Write Function ERROR - Return status: %s", logStatus[status]);
+}
+
+/*
+ * Log error status for i2cRead() function in i2c.h
+ */
+
+void logI2CReadReturns(int status)
+{
+	logFlush();
+
+	RETARGET_SerialInit();
+	/**
+	 * See https://siliconlabs.github.io/Gecko_SDK_Doc/efm32g/html/group__RetargetIo.html#ga9e36c68713259dd181ef349430ba0096
+	 * RETARGET_SerialCrLf() ensures each linefeed also includes carriage return.  Without it, the first character is shifted in TeraTerm
+	 */
+	RETARGET_SerialCrLf(true);
+
+	status += 5;
+
+	const char *logStatus[] =
+	{
+		"i2cTransferSwFault",
+		"i2cTransferUsageFault",
+		"i2cTransferArbLost",
+		"i2cTransferBusErr",
+		"i2cTransferNack",
+		"i2cTransferDone",
+		"i2cTransferInProgress"
+	};
+
+	LOG_INFO("I2CSPM Read Function ERROR - Return status: %s", logStatus[status]);
+}
+
 /**
  * Block for chars to be flushed out of the serial port.  Important to do this before entering SLEEP() or you may see garbage chars output.
  */

@@ -77,6 +77,7 @@ uint32_t COMP1_val;
 uint32_t timestamp_period_flag;
 
 volatile uint8_t wait_flag;
+volatile uint8_t event_flag;
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION PROTOTYPES

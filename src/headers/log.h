@@ -11,6 +11,8 @@
 /* Header File */
 #include "header.h"
 
+extern volatile float temp_reading;
+
 /**
  * Instructions for using this module:
  * 1) #include "log.h" in the C file where you'd like to add logging
@@ -73,6 +75,9 @@ void logFlush();
 #define LOG_DO(message,level, ...)
 static inline void logInit() {}
 static inline void logFlush() {}
+static inline void logTemp() {}
+static inline void logI2CWriteReturns(int status) {}
+static inline void logI2CReadReturns(int status) {}
 static inline void logString(char* mystring) {}
 #endif
 

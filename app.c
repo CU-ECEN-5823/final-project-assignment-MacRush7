@@ -30,6 +30,8 @@
 
 /* Own header */
 #include "app.h"
+#include "src/headers/header.h"
+extern volatile uint8_t event_flag;
 
 /*
  * Generic model IDs
@@ -227,6 +229,7 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 				{
 					/* Updating the LCD display. */
 					displayUpdate();
+					mcp9808_PrintTemp();
 					break;
 				}
 

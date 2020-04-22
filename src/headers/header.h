@@ -43,6 +43,8 @@
 #include "ble_mesh_device_type.h"
 #include "push_button.h"
 #include "gpiointerrupt.h"
+#include "mcp9808.h"
+#include "i2c.h"
 
 /* Standard headers */
 #include <stdbool.h>
