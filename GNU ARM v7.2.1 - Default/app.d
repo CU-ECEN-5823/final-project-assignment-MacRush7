@@ -92,7 +92,7 @@ app.o: ../app.c \
  ../src/headers/gecko_ble_errors.h ../src/headers/ble_mesh_device_type.h \
  ../src/headers/push_button.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\gpiointerrupt\inc/gpiointerrupt.h \
- ../src/headers/mcp9808.h ../src/headers/i2c.h
+ ../src/headers/mcp9808.h ../src/headers/i2c.h ../src/headers/state.h
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h:
 
@@ -295,3 +295,5 @@ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7
 ../src/headers/mcp9808.h:
 
 ../src/headers/i2c.h:
+
+../src/headers/state.h:

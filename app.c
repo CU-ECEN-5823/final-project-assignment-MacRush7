@@ -31,15 +31,20 @@
 /* Own header */
 #include "app.h"
 #include "src/headers/header.h"
-extern volatile uint8_t event_flag;
 
 /*
  * Generic model IDs
  */
+
 /** Generic on/off server */
 #define MESH_GENERIC_ON_OFF_SERVER_MODEL_ID       0x1000
 /** Generic on/off client */
 #define MESH_GENERIC_ON_OFF_CLIENT_MODEL_ID       0x1001
+/** Generic level server */
+#define MESH_GENERIC_LEVEL_SERVER_MODEL_ID        0x1002
+/** Generic level client */
+#define MESH_GENERIC_LEVEL_CLIENT_MODEL_ID        0x1003
+
 /** Stop timer. */
 #define TIMER_STOP 0
 
@@ -68,20 +73,10 @@ static uint8_t lpn_active = 0;
 /// number of active Bluetooth connections
 static uint8_t num_connections = 0;
 /// For indexing elements of the node (this example has only one element)
-static uint16_t _elem_index = 0xffff;
-/// Address of the Primary Element of the Node
-static uint16_t _my_address = 0;
-/// current position of the switch
-static uint8_t switch_pos = 0;
-/// on/off transaction identifier
-static uint8_t onoff_trid = 0;
-/// Timer Frequency used
 #define TIMER_CLK_FREQ ((uint32_t)32768)
 /// Convert miliseconds to timer ticks
 #define TIMER_MS_2_TIMERTICK(ms) ((TIMER_CLK_FREQ * ms) / 1000)
 /// Flag for indicating that initialization was performed
-static uint8_t init_done = 0;
-/// Flag for indicating DFU Reset must be performed
 static uint8_t boot_to_dfu = 0;
 
 /***********************************************************************************************//**
@@ -229,7 +224,6 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 				{
 					/* Updating the LCD display. */
 					displayUpdate();
-					mcp9808_PrintTemp();
 					break;
 				}
 
@@ -590,7 +584,7 @@ void set_device_name(bd_addr *pAddr)
   gecko_cmd_gatt_server_write_attribute_value(gattdb_device_name, 0, strlen(name), (uint8_t *)name);
 
   // show device name on the LCD
-  displayPrintf(DISPLAY_ROW_MAX, name);
+  displayPrintf(DISPLAY_ROW_CLIENTADDR, name);
 }
 
 ///***************************************************************************//**

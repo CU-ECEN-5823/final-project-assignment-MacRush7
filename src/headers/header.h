@@ -45,6 +45,7 @@
 #include "gpiointerrupt.h"
 #include "mcp9808.h"
 #include "i2c.h"
+#include "state.h"
 
 /* Standard headers */
 #include <stdbool.h>
@@ -59,6 +60,9 @@
 
 /* To enable display support. */
 #define DISPLAY_ENABLE
+
+/* Enabled MCP9808 interface. */
+#define MCP9808_ENABLED
 
 /* Enable the LCD Display using the above #define statement. */
 #ifdef DISPLAY_ENABLE

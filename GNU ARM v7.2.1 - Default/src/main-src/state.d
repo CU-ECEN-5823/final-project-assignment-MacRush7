@@ -1,5 +1,5 @@
-src/main-src/i2c.o: ../src/main-src/i2c.c \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h \
+src/main-src/state.o: ../src/main-src/state.c \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/header.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/gecko_configuration.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h \
@@ -96,12 +96,9 @@ src/main-src/i2c.o: ../src/main-src/i2c.c \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\gpiointerrupt\inc/gpiointerrupt.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/mcp9808.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\drivers/i2cspm.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\halconfig/i2cspmhalconfig.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_i2c.h
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h
 
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h:
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/header.h:
 
@@ -296,9 +293,3 @@ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\drivers/i2cspm.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\halconfig/i2cspmhalconfig.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_i2c.h:

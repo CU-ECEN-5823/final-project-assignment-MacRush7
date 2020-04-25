@@ -104,6 +104,7 @@ src/main.o: ../src/main.c \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\gpiointerrupt\inc/gpiointerrupt.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/mcp9808.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\halconfig/bsphalconfig.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\bsp/bsp_bcp.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/main.h
@@ -317,6 +318,8 @@ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/mcp9808.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\halconfig/bsphalconfig.h:
 

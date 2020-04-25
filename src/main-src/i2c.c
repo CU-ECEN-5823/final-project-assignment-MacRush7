@@ -68,6 +68,9 @@ I2CSPM_Init_TypeDef i2cInit =
 volatile I2C_TransferReturn_TypeDef transferStatusConnect;
 volatile I2C_TransferReturn_TypeDef transferStatusRead;
 
+volatile uint8_t connect_flag;
+volatile uint8_t read_flag;
+
 I2C_TransferSeq_TypeDef    seq;
 uint8_t i2c_read_data[2];
 uint8_t i2c_write_data[1];
@@ -116,16 +119,7 @@ void I2C_Write(uint8_t addr, uint8_t command)
 	connect_flag = 1;
 	NVIC_EnableIRQ(I2C0_IRQn);
 	transferStatusConnect = I2C_TransferInit(I2C0, &seq);
-	while (transferStatusConnect == i2cTransferInProgress);
-	NVIC_DisableIRQ(I2C0_IRQn);
-	connect_flag = 0;
-
-	if(transferStatusConnect != i2cTransferDone)
-	{
-		int status = transferStatusConnect;
-		logI2CWriteReturns(status);
-	}
-
+	SLEEP_SleepBlockBegin(sleepEM2);
 }
 
 /**
@@ -153,42 +147,7 @@ void I2C_Read(uint8_t addr)
 	read_flag = 1;
 	NVIC_EnableIRQ(I2C0_IRQn);
 	transferStatusRead = I2C_TransferInit(I2C0, &seq);
-	while (transferStatusRead == i2cTransferInProgress);
-	NVIC_DisableIRQ(I2C0_IRQn);
-	read_flag = 0;
-
-	if(transferStatusRead != i2cTransferDone)
-	{
-		int status = transferStatusRead;
-		logI2CReadReturns(status);
-	}
-
-	else
-	{
-		SLEEP_SleepBlockEnd(sleepEM2);
-		NVIC_DisableIRQ(I2C0_IRQn);
-
-		uint8_t LSB = i2c_read_data[1];
-		uint8_t MSB = i2c_read_data[0];
-
-		MSB &= 0x1F;
-
-		// Negative temperature
-		if((MSB & 0x10) == 0x10)
-		{
-			MSB &= 0x0F;
-			temp_reading = 256 - (((float) MSB * 16) + ((float) LSB / 16));
-		}
-
-		// Positive temperature
-		else
-		{
-			temp_reading = (((float) MSB * 16) + ((float) LSB / 16));
-		}
-
-		logTemp();
-		displayPrintf(DISPLAY_ROW_MAX, "Temp: %f C", temp_reading);
-	}
+	SLEEP_SleepBlockBegin(sleepEM2);
 }
 
 /*
@@ -203,8 +162,73 @@ void I2C_Read(uint8_t addr)
 
 void I2C0_IRQHandler(void)
 {
+	CORE_DECLARE_IRQ_STATE;
+	CORE_ENTER_CRITICAL();
+
 	if(connect_flag)
+	{
 		transferStatusConnect = I2C_Transfer(I2C0);
-	if(read_flag)
+		if(transferStatusConnect != i2cTransferInProgress)
+		{
+			if(transferStatusConnect == i2cTransferDone)
+			{
+				SLEEP_SleepBlockEnd(sleepEM2);
+				NVIC_DisableIRQ(I2C0_IRQn);
+
+				TEMP_I2C_WRITE_FLAG_SET();
+				gecko_external_signal(GECKO_TEMP_I2C_WRITE_FLAG);
+
+				connect_flag = 0;
+			}
+			else
+			{
+				int status = transferStatusConnect;
+				logI2CWriteReturns(status);
+			}
+		}
+	}
+	else if(read_flag)
+	{
 		transferStatusRead	= I2C_Transfer(I2C0);
+		if(transferStatusRead != i2cTransferInProgress)
+		{
+			if(transferStatusRead == i2cTransferDone)
+			{
+				SLEEP_SleepBlockEnd(sleepEM2);
+				NVIC_DisableIRQ(I2C0_IRQn);
+
+				uint8_t LSB = i2c_read_data[1];
+				uint8_t MSB = i2c_read_data[0];
+
+				MSB &= 0x1F;
+
+				// Negative temperature reading
+				if((MSB & 0x10) == 0x10)
+				{
+					MSB &= 0x0F;
+					temp_reading = 256 - (((float) MSB * 16) + ((float) LSB / 16));
+				}
+
+				// Positive temperature reading
+				else
+				{
+					temp_reading = (((float) MSB * 16) + ((float) LSB / 16));
+				}
+
+				app_temp_reading = temp_reading * 1000;
+
+				TEMP_I2C_READ_FLAG_SET();
+				gecko_external_signal(GECKO_TEMP_I2C_READ_FLAG);
+
+				read_flag = 0;
+			}
+			else
+			{
+				int status = transferStatusRead;
+				logI2CReadReturns(status);
+			}
+		}
+	}
+
+	CORE_EXIT_CRITICAL();
 }

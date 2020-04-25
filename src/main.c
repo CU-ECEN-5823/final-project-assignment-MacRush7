@@ -124,43 +124,63 @@ const gecko_configuration_t config =
  *******************************************************************************************************/
 int main(void)
 {
-  // Initialize device
-  initMcu();
-  // Initialize board
-  initBoard();
-  // Initialize application
-  initApp();
-  initVcomEnable();
+	// Initialize device
+	initMcu();
+	// Initialize board
+	initBoard();
+	// Initialize application
+	initApp();
+	initVcomEnable();
 
-  // Initialize peripherals
-  gecko_system_init();
+	// Initialize peripherals
+	gecko_system_init();
 
-  // Minimize advertisement latency by allowing the advertiser to always
-  // interrupt the scanner.
-  linklayer_priorities.scan_max = linklayer_priorities.adv_min + 1;
+	// Minimize advertisement latency by allowing the advertiser to always
+	// interrupt the scanner.
+	linklayer_priorities.scan_max = linklayer_priorities.adv_min + 1;
 
-  gecko_stack_init(&config);
+	gecko_stack_init(&config);
 
-  // Initialize the bgapi classes
-  if( DeviceUsesClientModel() ){
-	  gecko_bgapi_classes_init_client_lpn();
-  }
-  else {
-	  gecko_bgapi_classes_init_server_friend();
-  }
+	// Initialize the bgapi classes
+	if( DeviceUsesClientModel() )
+		gecko_bgapi_classes_init_client_lpn();
 
-  // Initialize coexistence interface. Parameters are taken from HAL config.
-  gecko_initCoexHAL();
+	else
+		gecko_bgapi_classes_init_server_friend();
 
-  while (1)
-  {
-    struct gecko_cmd_packet *evt = gecko_wait_event();
-    bool pass = mesh_bgapi_listener(evt);
-    if (pass)
-    {
-    	handle_ecen5823_gecko_event(BGLIB_MSG_ID(evt->header), evt);
-    }
-  }
+	// Initialize coexistence interface. Parameters are taken from HAL config.
+	gecko_initCoexHAL();
+
+	while (1)
+	{
+		#ifdef MCP9808_ENABLED
+		{
+			CORE_DECLARE_IRQ_STATE;
+			CORE_ENTER_CRITICAL();
+			{
+			  event_processing_bitmask |= interrupt_event_bitmask;
+			  EVT_PR_BITM_CLEAR_EXTRA();
+			  sm_ClearInt();
+			}
+			CORE_EXIT_CRITICAL();
+
+			if(event_processing_bitmask)
+			{
+			  static int i = 0;
+			  for(i = 0; event_processing_bitmask != 0; i++)
+				  sm_HandleEvents(i);
+			}
+		}
+		#endif
+
+		struct gecko_cmd_packet *evt = gecko_wait_event();
+		bool pass = mesh_bgapi_listener(evt);
+
+		if (pass)
+		{
+			handle_ecen5823_gecko_event(BGLIB_MSG_ID(evt->header), evt);
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -169,11 +189,13 @@ int main(void)
 
 void gecko_system_init(void)
 {
-	  /* Initializing Peripherals and Configurations */
-	  gpioInit();
-	  pushButton_Init();
-	  cmu_Init();
-	  letimer_Init();
-	  logInit();
-	  displayInit();
+	/* Initializing Peripherals and Configurations */
+	sm_Init();
+	gpioInit();
+	pushButton_Init();
+	cmu_Init();
+	letimer_Init();
+	i2c_Init();
+	logInit();
+	displayInit();
 }

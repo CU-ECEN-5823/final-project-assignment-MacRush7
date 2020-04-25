@@ -51,18 +51,12 @@
 // FUNCTION DEFINITIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-void mcp9808_PrintTemp(void)
-{
-	mcp9808_Init();
-	mcp9808_read_temp();
-}
-
-void mcp9808_Init(void)
+void mcp9808_Write(void)
 {
 	I2C_Write(mcp9808_slave_addr, mcp9808_read_command);
 }
 
-void mcp9808_read_temp(void)
+void mcp9808_Read(void)
 {
 	I2C_Read(mcp9808_slave_addr);
 }

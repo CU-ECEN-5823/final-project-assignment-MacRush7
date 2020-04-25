@@ -11,8 +11,8 @@
  * @author Rushi James Macwan
  */
 
-#ifndef SRC_HEADERS_LETIMER_H_
-#define SRC_HEADERS_LETIMER_H_
+#ifndef SRC_LETIMER_H_
+#define SRC_LETIMER_H_
 
 ////////////////////////////////////////////////////////////////////////////////
 // HEADER FILES
@@ -39,7 +39,7 @@
  * ONTIME			1000				100
  */
 
-#define PERIOD 3000 //(ms) /* Set interrupt period to 3 seconds for generating events */
+#define PERIOD 1000 //(ms) /* Set interrupt period to 3 seconds for generating Si7021-event */
 #define ONTIME 175  //(ms)
 
 	/*
@@ -77,7 +77,7 @@ uint32_t COMP1_val;
 uint32_t timestamp_period_flag;
 
 volatile uint8_t wait_flag;
-volatile uint8_t event_flag;
+extern uint8_t BLE_connection_notification;
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION PROTOTYPES
@@ -92,9 +92,10 @@ void letimer_NvicDisable(void);
 void letimer_IntCompSet(void);
 void LETIMER0_IRQHandler(void);
 uint32_t letimer_IntReset(void);
+void letimer_sleepblock(void);
 void letimer_Prescale(void);
 uint32_t letimer_TimeStampSet(void);
 void timerSetEventInMs(uint32_t ms_until_wakeup);
 void timerSetEventInMsReturns(void);
 
-#endif /* SRC_HEADERS_LETIMER_H_ */
+#endif /* SRC_LETIMER_H_ */

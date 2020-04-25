@@ -86,6 +86,12 @@ void LETIMER0_IRQHandler(void)
 	if(Int_status == LETIMER_IF_COMP0)
 	{
 		timestamp_period_flag++;
+
+		//if(BLE_connection_notification)
+		{
+			LETIMER_WAIT_FLAG_SET();
+			gecko_external_signal(GECKO_LETIMER_WAIT_FLAG);
+		}
 	}
 
 	else if(Int_status == LETIMER_IF_UF)
@@ -222,6 +228,34 @@ uint32_t letimer_IntReset(void)
 	LETIMER_IntClear(LETIMER0, Int_status);
 	LETIMER_IntDisable(LETIMER0, Int_status);
 	return Int_status;
+}
+
+/**
+ * @brief LETIMER sleep blocking setting
+ *
+ * @param void
+ * @return void.
+ */
+
+void letimer_sleepblock(void)
+{
+	switch(POWER_MODE)
+	{
+		case 0:
+				break;
+
+		case 1: SLEEP_SleepBlockBegin(sleepEM2);
+				break;
+
+		case 2: SLEEP_SleepBlockBegin(sleepEM3);
+				break;
+
+		case 3:
+				break;
+
+		default:SLEEP_Sleep();
+				break;
+	}
 }
 
 /**

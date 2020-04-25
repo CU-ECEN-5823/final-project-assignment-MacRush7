@@ -95,7 +95,8 @@ src/main-src/gecko_ble_errors.o: ../src/main-src/gecko_ble_errors.c \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/push_button.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\gpiointerrupt\inc/gpiointerrupt.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/mcp9808.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/gecko_ble_errors.h:
 
@@ -290,3 +291,5 @@ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/mcp9808.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/i2c.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/state.h:

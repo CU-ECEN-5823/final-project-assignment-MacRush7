@@ -5,8 +5,8 @@
  *      Author: Dan Walkes
  */
 
-#ifndef SRC_HEADERS_LOG_H_
-#define SRC_HEADERS_LOG_H_
+#ifndef SRC_LOG_H_
+#define SRC_LOG_H_
 
 /* Header File */
 #include "header.h"
@@ -64,7 +64,7 @@ extern volatile float temp_reading;
 
 #if INCLUDE_LOGGING
 #define LOG_DO(message,level, ...) \
-	printf( "%5"PRIu32":%s:%s: " message "\n", loggerGetTimestamp(), level, __func__, ##__VA_ARGS__ )
+		printf( "%5"PRIu32":%s:%s: " message "\n", loggerGetTimestamp(), level, __func__, ##__VA_ARGS__ )
 void logInit();
 uint32_t loggerGetTimestamp();
 void logFlush();
@@ -78,8 +78,9 @@ static inline void logFlush() {}
 static inline void logTemp() {}
 static inline void logI2CWriteReturns(int status) {}
 static inline void logI2CReadReturns(int status) {}
+static inline void logSM_Status(int current_state) {}
 static inline void logString(char* mystring) {}
 #endif
 
 
-#endif /* SRC_HEADERS_LOG_H_ */
+#endif /* SRC_LOG_H_ */

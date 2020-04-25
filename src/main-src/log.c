@@ -24,6 +24,8 @@ uint32_t loggerGetTimestamp(void)
  */
 void logInit(void)
 {
+	logFlush();
+
 	RETARGET_SerialInit();
 	/**
 	 * See https://siliconlabs.github.io/Gecko_SDK_Doc/efm32g/html/group__RetargetIo.html#ga9e36c68713259dd181ef349430ba0096
@@ -112,12 +114,22 @@ void logI2CReadReturns(int status)
 	LOG_INFO("I2CSPM Read Function ERROR - Return status: %s", logStatus[status]);
 }
 
-/**
- * Block for chars to be flushed out of the serial port.  Important to do this before entering SLEEP() or you may see garbage chars output.
+/*
+ * Logging the state-machine status
  */
-void logFlush(void)
+
+void logSM_Status(int current_state)
 {
-	RETARGET_SerialFlush();
+	logFlush();
+
+	RETARGET_SerialInit();
+	/**
+	 * See https://siliconlabs.github.io/Gecko_SDK_Doc/efm32g/html/group__RetargetIo.html#ga9e36c68713259dd181ef349430ba0096
+	 * RETARGET_SerialCrLf() ensures each linefeed also includes carriage return.  Without it, the first character is shifted in TeraTerm
+	 */
+	RETARGET_SerialCrLf(true);
+
+	LOG_INFO("Current State: %s", getStateReport(current_state));
 }
 
 /*
@@ -137,4 +149,11 @@ void logString(char* mystring)
 	LOG_INFO("%s", mystring);
 }
 
+/**
+ * Block for chars to be flushed out of the serial port.  Important to do this before entering SLEEP() or you may see garbage chars output.
+ */
+void logFlush(void)
+{
+	RETARGET_SerialFlush();
+}
 #endif
