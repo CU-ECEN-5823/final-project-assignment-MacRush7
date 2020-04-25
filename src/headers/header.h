@@ -62,7 +62,7 @@
 #define DISPLAY_ENABLE
 
 /* Enabled MCP9808 interface. */
-#define MCP9808_ENABLED
+#undef MCP9808_ENABLED
 
 /* Enable the LCD Display using the above #define statement. */
 #ifdef DISPLAY_ENABLE

@@ -126,7 +126,7 @@ void sm_HandleEvents(int current_state)
 				P_TEMP_I2C_READ_FLAG_CLEAR();
 				logTemp();
 				sprintf(LCD_print, "%s %f", "Temp(C): ", temp_reading);
-				displayPrintf(DISPLAY_ROW_BTADDR2, LCD_print);
+				displayPrintf(DISPLAY_ROW_TEMPERATURE, LCD_print);
 			}
 			break;
 

@@ -15,6 +15,10 @@
  *
  ******************************************************************************/
 
+////////////////////////////////////////////////////////////////////////////////
+// HEADER FILES
+////////////////////////////////////////////////////////////////////////////////
+
 /* C Standard Library headers */
 #include <stdio.h>
 
@@ -32,9 +36,13 @@
 #include "app.h"
 #include "src/headers/header.h"
 
-/*
- * Generic model IDs
- */
+////////////////////////////////////////////////////////////////////////////////
+// DEFINE STATEMENTS
+////////////////////////////////////////////////////////////////////////////////
+
+/*******************************************************************************
+ * Generic model IDs.
+ ******************************************************************************/
 
 /** Generic on/off server */
 #define MESH_GENERIC_ON_OFF_SERVER_MODEL_ID       0x1000
@@ -62,9 +70,9 @@
 #define TIMER_ID_NODE_CONFIGURED    30
 #define TIMER_ID_LCD_UPDATE			99
 
-/*******************************************************************************
- * Global variables
- ******************************************************************************/
+////////////////////////////////////////////////////////////////////////////////
+// GLOBAL VARIABLES & DEFINITIONS
+////////////////////////////////////////////////////////////////////////////////
 
 /// handle of the last opened LE connection
 static uint8_t conn_handle = 0xFF;
@@ -78,6 +86,10 @@ static uint8_t num_connections = 0;
 #define TIMER_MS_2_TIMERTICK(ms) ((TIMER_CLK_FREQ * ms) / 1000)
 /// Flag for indicating that initialization was performed
 static uint8_t boot_to_dfu = 0;
+
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION DEFINITIONS
+////////////////////////////////////////////////////////////////////////////////
 
 /***********************************************************************************************//**
  * @addtogroup Application
@@ -125,7 +137,7 @@ void gecko_bgapi_classes_init_server_friend(void)
 
 
 /*******************************************************************************
- * Initialize used bgapi classes for server.
+ * Initialize used bgapi classes for client.
  ******************************************************************************/
 void gecko_bgapi_classes_init_client_lpn(void)
 {
@@ -155,25 +167,6 @@ void gecko_bgapi_classes_init_client_lpn(void)
 	gecko_bgapi_class_mesh_scene_client_init();
 }
 
-/*******************************************************************************
- * Handling of stack events. Both Bluetooth LE and Bluetooth mesh events
- * are handled here.
- * @param[in] evt_id  Incoming event ID.
- * @param[in] evt     Pointer to incoming event.
- ******************************************************************************/
-/**************************** INSTRUCTIONS ************************************
- * 1. Before proceeding with assignment profile the project with attached blue
- * gecko and verify if it is being scanned by mobile mesh App.
- * 2. Use Bluetooth Mesh app from Silicon labs for the same and if you are not
- * able to get the app working checkout nRF Mesh App on play store.
- * 3. Add the necessary events for the mesh in switch (evt_id) similar to the
- * BLE assignments.
- * 4. Use the following pdf for reference
- * https://www.silabs.com/documents/public/reference-manuals/bluetooth-le-and-mesh-software-api-reference-manual.pdf
- * 5. Remember to check and log the return status for every Mesh API used.
- * 6. You can take the hints from light and switch example for mesh to know which
- * commands and events are needed and to understand the flow.
- ******************************************************************************/
 void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 {
 	uint16_t result;
@@ -191,11 +184,13 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 
 			if(DeviceIsOnOffPublisher())
 			{
-				displayPrintf(DISPLAY_ROW_NAME, "Publisher");
+				displayPrintf(DISPLAY_ROW_NAME, "Low Power Node");
+				//displayPrintf(DISPLAY_ROW_NAME, "Publisher");
 			}
 			else
 			{
-				displayPrintf(DISPLAY_ROW_NAME, "Subscriber");
+				displayPrintf(DISPLAY_ROW_NAME, "Friend Node");
+				//displayPrintf(DISPLAY_ROW_NAME, "Subscriber");
 			}
 
 			gecko_ecen5823_PrintDeviceAddress();
@@ -266,6 +261,8 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 
   	  		struct gecko_msg_mesh_node_initialized_evt_t *pData = (struct gecko_msg_mesh_node_initialized_evt_t *)&(evt->data);
 
+
+  	  		// Low-power Node
   	  		if(pData->provisioned && DeviceIsOnOffPublisher())
   	  		{
   	  			BTM_ADDRESS = pData->address;
@@ -282,6 +279,7 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 				lpn_init();
   	  		}
 
+  	  		// Friend Node
   	  		else if(pData->provisioned && DeviceIsOnOffSubscriber())
   	  		{
   	  			BTM_ADDRESS = pData->address;
@@ -295,7 +293,8 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 				pushButton_NodeInit();
 
 				// Initialize Low Power Node functionality
-				lpn_init();
+				//lpn_init();
+				gecko_cmd_mesh_friend_init();
 
   	  		}
 
@@ -455,9 +454,9 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 					PB_STAT = !GPIO_PinInGet(BSP_BUTTON0_PORT, BSP_BUTTON0_PIN);
 
 					if(PB_STAT)
-						displayPrintf(DISPLAY_ROW_BUTTON_STAT, "PB0 Pressed");
+						displayPrintf(DISPLAY_ROW_ALERT_NODES, "PB0 Pressed");
 					else
-						displayPrintf(DISPLAY_ROW_BUTTON_STAT, "PB0 Released");
+						displayPrintf(DISPLAY_ROW_ALERT_NODES, "PB0 Released");
 
 					req.kind = mesh_generic_request_on_off;
 
@@ -536,18 +535,11 @@ void gecko_ecen5823_PrintDeviceAddress(void)
 	set_device_name(&pAddr->address);
 }
 
-///***************************************************************************//**
-// * This function is called to initiate factory reset. Factory reset may be
-// * initiated by keeping one of the WSTK pushbuttons pressed during reboot.
-// * Factory reset is also performed if it is requested by the provisioner
-// * (event gecko_evt_mesh_node_reset_id).
-// ******************************************************************************/
 void initiate_factory_reset(void)
 {
-	displayPrintf(DISPLAY_ROW_CONNECTION, "");
-	displayPrintf(DISPLAY_ROW_PASSKEY, "*****");
+	displayPrintf(DISPLAY_ROW_CONNECTION, "*****");
 	displayPrintf(DISPLAY_ROW_ACTION, "FACTORY RESET");
-	displayPrintf(DISPLAY_ROW_BUTTON_STAT, "*****");
+	displayPrintf(DISPLAY_ROW_CONNECTIONS, "*****");
 
   /* if connection is open then close it before rebooting */
   if (conn_handle != 0xFF) {
@@ -559,15 +551,11 @@ void initiate_factory_reset(void)
   gecko_cmd_flash_ps_erase_all();
   // reboot after a small delay
   gecko_cmd_hardware_set_soft_timer(2 * 32768, TIMER_ID_FACTORY_RESET, 1);
+
+  displayPrintf(DISPLAY_ROW_CONNECTION, "");
+  displayPrintf(DISPLAY_ROW_CONNECTIONS, "");
 }
 
-///***************************************************************************//**
-// * Set device name in the GATT database. A unique name is generated using
-// * the two last bytes from the Bluetooth address of this device. Name is also
-// * displayed on the LCD.
-// *
-// * @param[in] pAddr  Pointer to Bluetooth address.
-// ******************************************************************************/
 void set_device_name(bd_addr *pAddr)
 {
   char name[20];
@@ -584,14 +572,10 @@ void set_device_name(bd_addr *pAddr)
   gecko_cmd_gatt_server_write_attribute_value(gattdb_device_name, 0, strlen(name), (uint8_t *)name);
 
   // show device name on the LCD
-  displayPrintf(DISPLAY_ROW_CLIENTADDR, name);
+  //displayPrintf(DISPLAY_ROW_CLIENTADDR, name);
+  LOG_INFO("%s", name);
 }
 
-///***************************************************************************//**
-// * Publisher node initialization.
-// * This is called at each boot if provisioning is already done.
-// * Otherwise this function is called after provisioning is completed.
-// ******************************************************************************/
 void pushButton_NodeInit(void)
 {
 	if(DeviceIsOnOffPublisher())
@@ -607,23 +591,6 @@ void pushButton_NodeInit(void)
 	}
 }
 
-/*******************************************************************************
- * This function process the requests for the Switch generic on/off model.
- *
- * @param[in] model_id       Server model ID.
- * @param[in] element_index  Server model element index.
- * @param[in] client_addr    Address of the client model which sent the message.
- * @param[in] server_addr    Address the message was sent to.
- * @param[in] appkey_index   The application key index used in encrypting the request.
- * @param[in] request        Pointer to the request structure.
- * @param[in] transition_ms  Requested transition time (in milliseconds).
- * @param[in] delay_ms       Delay time (in milliseconds).
- * @param[in] request_flags  Message flags. Bitmask of the following:
- *                           - Bit 0: Nonrelayed. If nonzero indicates
- *                                    a response to a nonrelayed request.
- *                           - Bit 1: Response required. If nonzero client
- *                                    expects a response from the server.
- ******************************************************************************/
 static void PushButton_RequestHandler(uint16_t model_id,
                           uint16_t element_index,
                           uint16_t client_addr,
@@ -641,9 +608,9 @@ static void PushButton_RequestHandler(uint16_t model_id,
 	else
 	{
 		if(request->on_off)
-			displayPrintf(DISPLAY_ROW_BUTTON_STAT,"Button Pressed");
+			displayPrintf(DISPLAY_ROW_ALERT_NODES,"1");
 		else
-			displayPrintf(DISPLAY_ROW_BUTTON_STAT,"Button Released");
+			displayPrintf(DISPLAY_ROW_ALERT_NODES,"0");
 
 		if (transition_ms == 0 && delay_ms == 0)
 		{
@@ -655,15 +622,6 @@ static void PushButton_RequestHandler(uint16_t model_id,
 	PushButton_PublishHandler(element_index, 0);
 }
 
-/***************************************************************************//**
- * Update Switch generic on/off state and publish model state to the network.
- *
- * @param[in] element_index  Server model element index.
- * @param[in] remaining_ms   The remaining time in milliseconds.
- *
- * @return Status of the update and publish operation.
- *         Returns bg_err_success (0) if succeed, non-zero otherwise.
- ******************************************************************************/
 static errorcode_t PushButton_PublishHandler(uint16_t element_index,
                                             uint32_t remaining_ms)
 {
@@ -691,16 +649,6 @@ static errorcode_t PushButton_PublishHandler(uint16_t element_index,
   return ret;
 }
 
-/*******************************************************************************
- * This function is a handler for Switch generic on/off change event.
- *
- * @param[in] model_id       Server model ID.
- * @param[in] element_index  Server model element index.
- * @param[in] current        Pointer to current state structure.
- * @param[in] target         Pointer to target state structure.
- * @param[in] remaining_ms   Time (in milliseconds) remaining before transition
- *                           from current state to target state is complete.
- ******************************************************************************/
 static void PushButton_ChangeHandler(uint16_t model_id,
                          uint16_t element_index,
                          const struct mesh_generic_state *current,
@@ -718,9 +666,6 @@ static void PushButton_ChangeHandler(uint16_t model_id,
 	}
 }
 
-///***************************************************************************//**
-// * Initialize LPN functionality with configuration and friendship establishment.
-// ******************************************************************************/
 void lpn_init(void)
 {
 	uint16_t result;
@@ -756,9 +701,6 @@ void lpn_init(void)
 	}
 }
 
-///***************************************************************************//**
-// * Deinitialize LPN functionality.
-// ******************************************************************************/
 void lpn_deinit(void)
 {
 
@@ -783,7 +725,7 @@ void BTM_Reset(void)
 {
 	BTM_ELEMENT_INDEX 					= 0;
 	BTM_ADDRESS							= 0;
-	BTM_PB_State.generic_onoff_current 	= 0;
+	BTM_PB_State.generic_onoff_current 	= -1;
 	BTM_PB_State.generic_onoff_target	= 0;
 
 	displayPrintf(DISPLAY_ROW_CONNECTION, "");

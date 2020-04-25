@@ -16,6 +16,10 @@
  *
  ******************************************************************************/
 
+////////////////////////////////////////////////////////////////////////////////
+// HEADER FILES
+////////////////////////////////////////////////////////////////////////////////
+
 /* Board headers */
 #include "init_mcu.h"
 #include "init_board.h"
@@ -41,13 +45,18 @@
 /* Application code */
 #include "app.h"
 
+/* Main header file */
+#include "src/headers/main.h"
+
 #if defined(HAL_CONFIG)
 #include "bsphalconfig.h"
 #else
 #include "bspconfig.h"
 #endif
 
-#include "src/headers/main.h"
+////////////////////////////////////////////////////////////////////////////////
+// GLOBAL VARIABLES & DEFINITIONS
+////////////////////////////////////////////////////////////////////////////////
 
 /***********************************************************************************************//**
  * @addtogroup Application
@@ -62,7 +71,7 @@
 bool mesh_bgapi_listener(struct gecko_cmd_packet *evt);
 
 /// Maximum number of simultaneous Bluetooth connections
-#define MAX_CONNECTIONS 2
+#define MAX_CONNECTIONS 3
 
 /// Heap for Bluetooth stack
 uint8_t bluetooth_stack_heap[DEFAULT_BLUETOOTH_HEAP(MAX_CONNECTIONS) + BTMESH_HEAP_SIZE + 1760];
@@ -108,20 +117,10 @@ const gecko_configuration_t config =
   .rf.antenna = GECKO_RF_ANTENNA,   // Select antenna path!
 };
 
+////////////////////////////////////////////////////////////////////////////////
+// MAIN FUNCTION
+////////////////////////////////////////////////////////////////////////////////
 
-/*******************************************************************************************************
- * Main function.
- * Instructions to proceed for the mesh assignment.
- * 1. Add the gpio enable display function in gpio.c & gpio.h from Assignment 6.
- * 2. Complete displayUpdate() function in display.c similar to instructions in Assignment 6.
- * 3. Add your logic for loggerGetTimestamp() function in log.c from assignment 4.
- * 4. You can leverage your assignment files for timers, cmu etc. for this assignment.
- *
- * After completing above steps check for its functionality and proceed to mesh implementation.
- * 1. Use compile time switch in ble_mesh_device_type.h file to switch between publisher and subscriber.
- * 2. Add appropriate initializations in main before while loop.
- * 3. Then proceed to app.c for further instructions.
- *******************************************************************************************************/
 int main(void)
 {
 	// Initialize device
