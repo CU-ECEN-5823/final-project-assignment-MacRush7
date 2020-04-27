@@ -42,6 +42,9 @@
 /* Device initialization header */
 #include "hal-config.h"
 
+/* Application config code */
+#include "app_config.h"
+
 /* Application code */
 #include "app.h"
 
@@ -99,6 +102,7 @@ const gecko_configuration_t config =
   .bluetooth.heap = bluetooth_stack_heap,
   .bluetooth.heap_size = sizeof(bluetooth_stack_heap) - BTMESH_HEAP_SIZE,
 #if defined(FEATURE_LFXO)
+  .sleep.flags = SLEEP_FLAGS_DEEP_SLEEP_ENABLE,
   .bluetooth.sleep_clock_accuracy = 100, // ppm
 #elif defined(PLFRCO_PRESENT) || defined(LFRCO_PRESENT)
   .bluetooth.sleep_clock_accuracy = 500, // ppm

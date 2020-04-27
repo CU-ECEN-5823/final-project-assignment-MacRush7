@@ -1,5 +1,13 @@
-src/main-src/em_letimer.o: ../src/main-src/em_letimer.c \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/em_letimer.h \
+app_config.o: ../app_config.c ../app_config.h ../app.h \
+ ../src/headers/header.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/gecko_configuration.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\soc/native_gecko.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/hal-config.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/board_features.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/ble-configuration.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\EFR32BG13_BRD4104A\config/hal-config-board.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\Device\SiliconLabs\EFR32BG13P\Include/em_device.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\Device\SiliconLabs\EFR32BG13P\Include/efr32bg13p632f512gm48.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\CMSIS\Include/core_cm4.h \
@@ -53,14 +61,60 @@ src/main-src/em_letimer.o: ../src/main-src/em_letimer.c \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\Device\SiliconLabs\EFR32BG13P\Include/efr32bg13p_dmareq.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\Device\SiliconLabs\EFR32BG13P\Include/efr32bg13p_af_ports.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\Device\SiliconLabs\EFR32BG13P\Include/efr32bg13p_af_pins.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_cmu.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_assert.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_bus.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\halconfig\inc\hal-config/hal-config-types.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_gpio.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_bus.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_assert.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/hal-config-app-common.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_errorcodes.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_core.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_common.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_assert.h
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_cmu.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_gpio.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_emu.h \
+ ../src/headers/em_letimer.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\drivers/retargetserial.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\halconfig/retargetserialhalconfig.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\sleep\inc/sleep.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/gatt_db.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h \
+ ../src/headers/infrastructure.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib\glib/glib.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib\glib/glib_color.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib/dmd/dmd.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib/em_types.h \
+ ../src/headers/cmu.h ../src/headers/header.h ../src/headers/gpio.h \
+ ../src/headers/letimer.h ../src/headers/log.h ../src/headers/display.h \
+ ../src/headers/gecko_ble_errors.h ../src/headers/ble_mesh_device_type.h \
+ ../src/headers/push_button.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\gpiointerrupt\inc/gpiointerrupt.h \
+ ../src/headers/mcp9808.h ../src/headers/i2c.h ../src/headers/state.h \
+ ../gatt_db.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_generic_model_capi_types.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_lib.h
 
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/src/headers/em_letimer.h:
+../app_config.h:
+
+../app.h:
+
+../src/headers/header.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/gecko_configuration.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\soc/native_gecko.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/hal-config.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/board_features.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/ble-configuration.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\EFR32BG13_BRD4104A\config/hal-config-board.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\Device\SiliconLabs\EFR32BG13P\Include/em_device.h:
 
@@ -168,14 +222,80 @@ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\Device\SiliconLabs\EFR32BG13P\Include/efr32bg13p_af_pins.h:
 
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_cmu.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_assert.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_bus.h:
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\halconfig\inc\hal-config/hal-config-types.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_gpio.h:
 
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_common.h:
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_bus.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_assert.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/hal-config-app-common.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_errorcodes.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_core.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_common.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_cmu.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_gpio.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_emu.h:
+
+../src/headers/em_letimer.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\drivers/retargetserial.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\halconfig/retargetserialhalconfig.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\sleep\inc/sleep.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/gatt_db.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h:
+
+../src/headers/infrastructure.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib\glib/glib.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib\glib/glib_color.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib/dmd/dmd.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib/em_types.h:
+
+../src/headers/cmu.h:
+
+../src/headers/header.h:
+
+../src/headers/gpio.h:
+
+../src/headers/letimer.h:
+
+../src/headers/log.h:
+
+../src/headers/display.h:
+
+../src/headers/gecko_ble_errors.h:
+
+../src/headers/ble_mesh_device_type.h:
+
+../src/headers/push_button.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\gpiointerrupt\inc/gpiointerrupt.h:
+
+../src/headers/mcp9808.h:
+
+../src/headers/i2c.h:
+
+../src/headers/state.h:
+
+../gatt_db.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_generic_model_capi_types.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_lib.h:

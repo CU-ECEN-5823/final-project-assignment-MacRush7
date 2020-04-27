@@ -1,4 +1,6 @@
-app.o: ../app.c \
+app.o: ../app.c ../app.h ../src/headers/header.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/gecko_configuration.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\soc/native_gecko.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/hal-config.h \
@@ -63,15 +65,8 @@ app.o: ../app.c \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_bus.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_assert.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/hal-config-app-common.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/gecko_configuration.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_errorcodes.h \
- ../gatt_db.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_generic_model_capi_types.h \
- C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_lib.h \
- ../app.h ../src/headers/header.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_core.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_common.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_cmu.h \
@@ -82,6 +77,7 @@ app.o: ../app.c \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\hardware\kit\common\halconfig/retargetserialhalconfig.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\sleep\inc/sleep.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/gatt_db.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h \
  ../src/headers/infrastructure.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib\glib/glib.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\middleware\glib\glib/glib_color.h \
@@ -92,7 +88,18 @@ app.o: ../app.c \
  ../src/headers/gecko_ble_errors.h ../src/headers/ble_mesh_device_type.h \
  ../src/headers/push_button.h \
  C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\gpiointerrupt\inc/gpiointerrupt.h \
- ../src/headers/mcp9808.h ../src/headers/i2c.h ../src/headers/state.h
+ ../src/headers/mcp9808.h ../src/headers/i2c.h ../src/headers/state.h \
+ ../gatt_db.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_generic_model_capi_types.h \
+ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_lib.h
+
+../app.h:
+
+../src/headers/header.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/gecko_configuration.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h:
 
@@ -222,25 +229,9 @@ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/hal-config-app-common.h:
 
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/gecko_configuration.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h:
-
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_types.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_errorcodes.h:
-
-../gatt_db.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_generic_model_capi_types.h:
-
-C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_lib.h:
-
-../app.h:
-
-../src/headers/header.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emlib\inc/em_core.h:
 
@@ -261,6 +252,8 @@ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\platform\emdrv\sleep\inc/sleep.h:
 
 C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7/gatt_db.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc\common/bg_gattdb_def.h:
 
 ../src/headers/infrastructure.h:
 
@@ -297,3 +290,9 @@ C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7
 ../src/headers/i2c.h:
 
 ../src/headers/state.h:
+
+../gatt_db.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_generic_model_capi_types.h:
+
+C:\Users\rualjim\SimplicityStudio\v4_workspace\final-project-assignment-MacRush7\protocol\bluetooth\bt_mesh\inc/mesh_lib.h:

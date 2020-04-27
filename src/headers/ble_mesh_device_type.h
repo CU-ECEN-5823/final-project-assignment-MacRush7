@@ -11,19 +11,19 @@
 #define SRC_HEADERS_BLE_MESH_DEVICE_TYPE_H_
 
 /**
- * Set to 1 to build an on/off publisher client model for Assignment 10
- * Set to 0 to build an on/off subscriber server model for Assignment 10
+ * Set to 1 to build an level publisher client model for Assignment 10
+ * Set to 0 to build an level subscriber server model for Assignment 10
  */
-#define DEVICE_IS_ONOFF_PUBLISHER			0
+#define DEVICE_IS_Level_PUBLISHER			0
 
-#if DEVICE_IS_ONOFF_PUBLISHER
+#if DEVICE_IS_Level_PUBLISHER
 #define DEVICE_USES_BLE_MESH_CLIENT_MODEL 	1
 #define DEVICE_USES_BLE_MESH_SERVER_MODEL 	0
 #define DEVICE_IS_BLE_MESH_LPN 				1
 #else
 #define DEVICE_USES_BLE_MESH_CLIENT_MODEL 	0
 #define DEVICE_USES_BLE_MESH_SERVER_MODEL 	1
-#define DEVICE_IS_ONOFF_SUBSCRIBER			1
+#define DEVICE_IS_Level_SUBSCRIBER			1
 #define DEVICE_IS_BLE_MESH_FRIEND 			1
 #endif
 
@@ -61,16 +61,16 @@ static inline bool DeviceUsesServerModel() { return false; }
 #endif
 
 
-#if DEVICE_IS_ONOFF_PUBLISHER
-static inline bool DeviceIsOnOffPublisher() { return true; }
+#if DEVICE_IS_Level_PUBLISHER
+static inline bool DeviceIsLevelPublisher() { return true; }
 #else
-static inline bool DeviceIsOnOffPublisher() { return false; }
+static inline bool DeviceIsLevelPublisher() { return false; }
 #endif
 
-#if DEVICE_IS_ONOFF_SUBSCRIBER
-static inline bool DeviceIsOnOffSubscriber() { return true; }
+#if DEVICE_IS_Level_SUBSCRIBER
+static inline bool DeviceIsLevelSubscriber() { return true; }
 #else
-static inline bool DeviceIsOnOffSubscriber() { return false; }
+static inline bool DeviceIsLevelSubscriber() { return false; }
 #endif
 
 #endif /* SRC_HEADERS_BLE_MESH_DEVICE_TYPE_H_ */
