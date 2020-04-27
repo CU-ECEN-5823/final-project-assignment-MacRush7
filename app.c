@@ -70,6 +70,11 @@
 #define TIMER_ID_NODE_CONFIGURED    30
 #define TIMER_ID_LCD_UPDATE			99
 
+
+#define FLASH_ADDR					0x4000
+#define FLASH_DATA_LENGTH			1
+#define FLASH_OP_FAILED				0x0502
+
 ////////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES & DEFINITIONS
 ////////////////////////////////////////////////////////////////////////////////
@@ -86,6 +91,8 @@ static uint8_t num_connections = 0;
 #define TIMER_MS_2_TIMERTICK(ms) ((TIMER_CLK_FREQ * ms) / 1000)
 /// Flag for indicating that initialization was performed
 static uint8_t boot_to_dfu = 0;
+
+uint8_t alarm_buffer;
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION DEFINITIONS
@@ -180,7 +187,10 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 	{
 		case gecko_evt_system_boot_id:
 		{
+			displayPrintf(DISPLAY_ROW_CONNECTION, "Booting");
 			BTM_Reset();
+			gecko_load_alarm();
+			reset_print_alarm_buffer();
 
 			if(DeviceIsOnOffPublisher())
 			{
@@ -189,6 +199,7 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 			}
 			else
 			{
+
 				displayPrintf(DISPLAY_ROW_NAME, "Friend Node");
 				//displayPrintf(DISPLAY_ROW_NAME, "Subscriber");
 			}
@@ -198,12 +209,11 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 			// check pushbutton state at startup. If either PB0 or PB1 is held down then do factory reset
 			if (GPIO_PinInGet(BSP_BUTTON0_PORT, BSP_BUTTON0_PIN) == 0 || GPIO_PinInGet(BSP_BUTTON1_PORT, BSP_BUTTON1_PIN) == 0)
 			{
+				LCD_clearData();
 				initiate_factory_reset();
 			}
 			else
 			{
-				displayPrintf(DISPLAY_ROW_CONNECTION, "Booting");
-
 				// Initialize Mesh stack in Node operation mode, it will generate initialized event
 				gecko_cmd_mesh_node_init();
 			}
@@ -257,17 +267,16 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 
   	  	case gecko_evt_mesh_node_initialized_id:
   	  	{
-  	  		displayPrintf(DISPLAY_ROW_CONNECTION, "");
+  	  		displayPrintf(DISPLAY_ROW_CONNECTION, "Initialized");
 
   	  		struct gecko_msg_mesh_node_initialized_evt_t *pData = (struct gecko_msg_mesh_node_initialized_evt_t *)&(evt->data);
-
 
   	  		// Low-power Node
   	  		if(pData->provisioned && DeviceIsOnOffPublisher())
   	  		{
-  	  			BTM_ADDRESS = pData->address;
+  	  			displayPrintf(DISPLAY_ROW_ACTION, "Provisioned");
 
-  	  			displayPrintf(DISPLAY_ROW_ACTION, "Initialized");
+  	  			BTM_ADDRESS = pData->address;
 
   	  			gecko_cmd_mesh_generic_client_init();
 
@@ -282,9 +291,9 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
   	  		// Friend Node
   	  		else if(pData->provisioned && DeviceIsOnOffSubscriber())
   	  		{
-  	  			BTM_ADDRESS = pData->address;
+  	  			displayPrintf(DISPLAY_ROW_ACTION, "Provisioned");
 
-  	  			displayPrintf(DISPLAY_ROW_ACTION, "Initialized");
+  	  			BTM_ADDRESS = pData->address;
 
   	  			gecko_cmd_mesh_generic_server_init();
 
@@ -319,12 +328,16 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
   	  		{
   	  			displayPrintf(DISPLAY_ROW_ACTION, "Provisioned");
   	  			gecko_cmd_mesh_generic_client_init();
+  		    	/* start a one-shot timer that will trigger soft reset after small delay */
+  		    	gecko_cmd_hardware_set_soft_timer(1 * 32768, TIMER_ID_RESTART, 1);
   	  		}
 
   	  		else if(DeviceIsOnOffSubscriber())
   	  		{
   	  			displayPrintf(DISPLAY_ROW_ACTION, "Provisioned");
   	  			gecko_cmd_mesh_generic_server_init();
+  		    	/* start a one-shot timer that will trigger soft reset after small delay */
+  		    	gecko_cmd_hardware_set_soft_timer(1 * 32768, TIMER_ID_RESTART, 1);
   	  		}
 
 
@@ -340,12 +353,10 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 
 	    case gecko_evt_mesh_node_provisioning_failed_id:
 	    {
-	    	displayPrintf(DISPLAY_ROW_ACTION, "FAILED Provisioning");
+	    	displayPrintf(DISPLAY_ROW_ACTION, "Provision Fails");
 
 	    	/* start a one-shot timer that will trigger soft reset after small delay */
 	    	gecko_cmd_hardware_set_soft_timer(2 * 32768, TIMER_ID_RESTART, 1);
-
-	    	displayPrintf(DISPLAY_ROW_CONNECTION, "Resetting");
 
 	    	break;
 	    }
@@ -408,7 +419,7 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 
         case gecko_evt_mesh_node_reset_id:
         {
-        	displayPrintf(DISPLAY_ROW_CONNECTION, "Resetting");
+        	LCD_clearData();
         	initiate_factory_reset();
 
         	break;
@@ -444,41 +455,6 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 
         case gecko_evt_system_external_signal_id:
         {
-    			uint8_t PB_STAT = 0;
-    			uint16_t  ret = 0;
-    			static uint8_t transaction_id= 0;
-    			struct mesh_generic_request req;
-
-    			if(DeviceUsesClientModel())
-				{
-					PB_STAT = !GPIO_PinInGet(BSP_BUTTON0_PORT, BSP_BUTTON0_PIN);
-
-					if(PB_STAT)
-						displayPrintf(DISPLAY_ROW_ALERT_NODES, "PB0 Pressed");
-					else
-						displayPrintf(DISPLAY_ROW_ALERT_NODES, "PB0 Released");
-
-					req.kind = mesh_generic_request_on_off;
-
-					if(PB_STAT)
-						req.on_off = MESH_GENERIC_ON_OFF_STATE_ON;
-
-					else
-						req.on_off = MESH_GENERIC_ON_OFF_STATE_OFF;
-
-					ret = mesh_lib_generic_client_publish(MESH_GENERIC_ON_OFF_CLIENT_MODEL_ID, BTM_ELEMENT_INDEX, transaction_id, &req, 0,0,0);
-
-					if(ret)
-					{
-						LOG_INFO("\nSend Failed\n");
-					}
-					else
-					{
-						LOG_INFO("\nvalue sent successfully\n");
-					}
-
-					transaction_id++;
-				}
 
         	break;
         }
@@ -502,6 +478,16 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 			break;
 		}
 	}
+}
+
+void LCD_clearData(void)
+{
+	displayPrintf(DISPLAY_ROW_CONNECTION, "");
+	displayPrintf(DISPLAY_ROW_ACTION, "");
+	displayPrintf(DISPLAY_ROW_LPN_MOISTURE, "");
+	displayPrintf(DISPLAY_ROW_LPN_ALIGHT, "");
+	displayPrintf(DISPLAY_ROW_LPN_UVLIGHT, "");
+	displayPrintf(DISPLAY_ROW_TEMPERATURE, "");
 }
 
 /**
@@ -537,9 +523,9 @@ void gecko_ecen5823_PrintDeviceAddress(void)
 
 void initiate_factory_reset(void)
 {
-	displayPrintf(DISPLAY_ROW_CONNECTION, "*****");
-	displayPrintf(DISPLAY_ROW_ACTION, "FACTORY RESET");
-	displayPrintf(DISPLAY_ROW_CONNECTIONS, "*****");
+	displayPrintf(DISPLAY_ROW_LPN_MOISTURE, "*****");
+	displayPrintf(DISPLAY_ROW_LPN_ALIGHT, "FACTORY RESET");
+	displayPrintf(DISPLAY_ROW_LPN_UVLIGHT, "*****");
 
   /* if connection is open then close it before rebooting */
   if (conn_handle != 0xFF) {
@@ -552,8 +538,8 @@ void initiate_factory_reset(void)
   // reboot after a small delay
   gecko_cmd_hardware_set_soft_timer(2 * 32768, TIMER_ID_FACTORY_RESET, 1);
 
-  displayPrintf(DISPLAY_ROW_CONNECTION, "");
-  displayPrintf(DISPLAY_ROW_CONNECTIONS, "");
+	displayPrintf(DISPLAY_ROW_CONNECTION, "");
+	displayPrintf(DISPLAY_ROW_ACTION, "");
 }
 
 void set_device_name(bd_addr *pAddr)
@@ -607,19 +593,123 @@ static void PushButton_RequestHandler(uint16_t model_id,
 	}
 	else
 	{
-		if(request->on_off)
-			displayPrintf(DISPLAY_ROW_ALERT_NODES,"1");
-		else
-			displayPrintf(DISPLAY_ROW_ALERT_NODES,"0");
-
-		if (transition_ms == 0 && delay_ms == 0)
+		switch(client_addr)
 		{
-			BTM_PB_State.generic_onoff_current = request->on_off;
-			BTM_PB_State.generic_onoff_target  = request->on_off;
+			case 0x02:
+			{
+				if(request->on_off)
+				{
+					displayPrintf(DISPLAY_ROW_LPN_MOISTURE,"MOIST: ALARM");
+					alarm_buffer |= 0x01;
+				}
+				else
+				{
+					displayPrintf(DISPLAY_ROW_LPN_MOISTURE,"MOIST: No Alarm");
+					alarm_buffer &= 0xFE;
+				}
+
+				break;
+			}
+
+			case 0x03:
+			{
+				if(request->on_off)
+				{
+					displayPrintf(DISPLAY_ROW_LPN_ALIGHT,"ALIGHT: ALARM");
+					alarm_buffer |= 0x02;
+				}
+				else
+				{
+					displayPrintf(DISPLAY_ROW_LPN_ALIGHT,"ALIGHT: No Alarm");
+					alarm_buffer &= 0xFD;
+				}
+
+				break;
+			}
+
+			case 0x04:
+			{
+				if(request->on_off)
+				{
+					displayPrintf(DISPLAY_ROW_LPN_UVLIGHT,"UVLIGHT: Alarm");
+					alarm_buffer |= 0x04;
+				}
+				else
+				{
+					displayPrintf(DISPLAY_ROW_LPN_UVLIGHT,"UVLIGHT: No Alarm");
+					alarm_buffer &= 0xFB;
+				}
+
+				break;
+			}
+
+			default:
+				break;
 		}
 	}
 
 	PushButton_PublishHandler(element_index, 0);
+	gecko_store_alarm();
+}
+
+void reset_print_alarm_buffer(void)
+{
+	if(alarm_buffer & 0x01)
+	{
+		displayPrintf(DISPLAY_ROW_LPN_MOISTURE,"MOIST: ALARM");
+	}
+	else
+	{
+		displayPrintf(DISPLAY_ROW_LPN_MOISTURE,"MOIST: No Alarm");
+	}
+
+	if(alarm_buffer & 0x02)
+	{
+		displayPrintf(DISPLAY_ROW_LPN_ALIGHT,"ALIGHT: ALARM");
+	}
+	else
+	{
+		displayPrintf(DISPLAY_ROW_LPN_ALIGHT,"ALIGHT: No Alarm");
+	}
+
+	if(alarm_buffer & 0x04)
+	{
+		displayPrintf(DISPLAY_ROW_LPN_UVLIGHT,"UVLIGHT: ALARM");
+	}
+	else
+	{
+		displayPrintf(DISPLAY_ROW_LPN_UVLIGHT,"UVLIGHT: No Alarm");
+	}
+}
+
+void gecko_store_alarm(void)
+{
+	BTSTACK_CHECK_RESPONSE(gecko_cmd_flash_ps_save(FLASH_ADDR, FLASH_DATA_LENGTH, &alarm_buffer));
+}
+
+void gecko_load_alarm(void)
+{
+    uint16_t result;
+
+	struct gecko_msg_flash_ps_load_rsp_t* flash_result;
+    flash_result = gecko_cmd_flash_ps_load(FLASH_ADDR);
+
+    alarm_buffer = flash_result->value.data[0];
+
+    result = flash_result->result;
+    if(result)
+	{
+		if(result == FLASH_OP_FAILED)
+		{
+			alarm_buffer = 0;
+			gecko_store_alarm();
+			gecko_load_alarm();
+		}
+		else
+		{
+			LOG_ERROR("Flash operation failed.");
+		}
+	}
 }
 
 static errorcode_t PushButton_PublishHandler(uint16_t element_index,

@@ -77,6 +77,10 @@ void gecko_ecen5823_PrintDeviceAddress(void);
 void initiate_factory_reset(void);
 void set_device_name(bd_addr *pAddr);
 void pushButton_NodeInit(void);
+void LCD_clearData(void);
+void gecko_load_alarm(void);
+void gecko_store_alarm(void);
+void reset_print_alarm_buffer(void);
 
 static void PushButton_RequestHandler(uint16_t model_id,
                           uint16_t element_index,

@@ -28,15 +28,15 @@
 #include "header.h"
 
 enum display_row {
-	DISPLAY_ROW_NAME,
-	DISPLAY_ROW_BTADDR,
-	DISPLAY_ROW_CONNECTION,
-	DISPLAY_ROW_ACTION,
-	DISPLAY_ROW_CONNECTIONS,
-	DISPLAY_ROW_ALERTS,
-	DISPLAY_ROW_ALERT_NODES,
-	DISPLAY_ROW_TEMPERATURE,
-	DISPLAY_ROW_MAX,
+	DISPLAY_ROW_NAME,			// Device Type & Author Name
+	DISPLAY_ROW_BTADDR,			// Device BT Address
+	DISPLAY_ROW_CONNECTION,		// Device Connection Status
+	DISPLAY_ROW_ACTION,			// Device Current Actions
+	DISPLAY_ROW_LPN_MOISTURE,	// LPN - 1 (Moisture Sensor)
+	DISPLAY_ROW_LPN_ALIGHT,		// LPN - 2 (Ambient Light Sensor)
+	DISPLAY_ROW_LPN_UVLIGHT,	// LPN - 3 (UV Light Sensor)
+	DISPLAY_ROW_TEMPERATURE,	// Local MCP9808 Temperature Sensor Reports
+	DISPLAY_ROW_MAX,			// Max number of rows display can support
 };
 
 uint8_t timerEnabled1HzSchedulerEvent;
