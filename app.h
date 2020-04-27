@@ -52,6 +52,13 @@ struct PushButton_State
 	uint8_t generic_onoff_target;
 } BTM_PB_State;
 
+struct Friend_States
+{
+	uint16_t moisture_level;
+	uint16_t alight_level;
+	uint16_t uvlight_level;
+} Friend_Stat;
+
 /*******************************************************************************
  * Initialize used bgapi classes for server.
  ******************************************************************************/

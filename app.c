@@ -286,7 +286,11 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 
   	  			displayPrintf(DISPLAY_ROW_ACTION, "Initialized");
 
-  	  			gecko_cmd_mesh_generic_server_init();
+  	  			result = gecko_cmd_mesh_generic_server_init()->result;
+  	  			if(result)
+				{
+					LOG_ERROR("Server init failed (0x%x)", result);
+				}
 
 				/* Enabling pushbutton interrupts to handle button_state BLE service. */
 				pushButton_EnableInt();
@@ -294,8 +298,11 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 
 				// Initialize Low Power Node functionality
 				//lpn_init();
-				gecko_cmd_mesh_friend_init();
-
+				result = gecko_cmd_mesh_friend_init()->result;
+				if(result)
+				{
+					LOG_ERROR("Friendship init failed (0x%x)", result);
+				}
   	  		}
 
  	        else if(!evt->data.evt_mesh_node_initialized.provisioned)
@@ -378,7 +385,6 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 			displayPrintf(DISPLAY_ROW_CONNECTION, "Connected");
 
 			// turn off lpn feature after GATT connection is opened
-			lpn_deinit();
 			break;
 	    }
 
@@ -504,6 +510,28 @@ void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt)
 	}
 }
 
+static void level_request(uint16_t model_id,
+                              uint16_t element_index,
+                              uint16_t client_addr,
+                              uint16_t server_addr,
+                              uint16_t appkey_index,
+                              const struct mesh_generic_request *request,
+                              uint32_t transition_ms,
+                              uint16_t delay_ms,
+                              uint8_t request_flags)
+{
+	LOG_INFO("Change in data: %d", request->level);
+	displayPrintf(DISPLAY_ROW_TEMPERATURE, "%d", request->level);
+}
+
+static void level_change(uint16_t model_id,
+                             uint16_t element_index,
+                             const struct mesh_generic_state *current,
+                             const struct mesh_generic_state *target,
+                             uint32_t remaining_ms)
+{
+}
+
 /**
  * @brief GECKO_ECEN5823 Gecko BLE device address printing
  *
@@ -586,8 +614,9 @@ void pushButton_NodeInit(void)
 	else if(DeviceIsOnOffSubscriber())
 	{
 		mesh_lib_init(malloc, free, 9);
-		mesh_lib_generic_server_register_handler(MESH_GENERIC_ON_OFF_SERVER_MODEL_ID, 0, PushButton_RequestHandler, PushButton_ChangeHandler, NULL);
-		PushButton_PublishHandler(0, 0);
+		//mesh_lib_generic_server_register_handler(MESH_GENERIC_ON_OFF_SERVER_MODEL_ID, 0, PushButton_RequestHandler, PushButton_ChangeHandler, NULL);
+		mesh_lib_generic_server_register_handler(MESH_GENERIC_LEVEL_SERVER_MODEL_ID, 0, level_request, level_change, NULL);
+		//PushButton_PublishHandler(0, 0);
 	}
 }
 
