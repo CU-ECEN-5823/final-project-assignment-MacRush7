@@ -58,58 +58,13 @@ void gecko_bgapi_classes_init_server_friend(void)
   gecko_bgapi_class_system_init();
   gecko_bgapi_class_le_gap_init();
   gecko_bgapi_class_le_connection_init();
-  //gecko_bgapi_class_gatt_init();
   gecko_bgapi_class_gatt_server_init();
   gecko_bgapi_class_hardware_init();
   gecko_bgapi_class_flash_init();
   gecko_bgapi_class_test_init();
-  //gecko_bgapi_class_sm_init();
   gecko_bgapi_class_mesh_node_init();
-  //gecko_bgapi_class_mesh_prov_init();
   gecko_bgapi_class_mesh_proxy_init();
   gecko_bgapi_class_mesh_proxy_server_init();
-  //gecko_bgapi_class_mesh_proxy_client_init();
-  //gecko_bgapi_class_mesh_generic_client_init();
   gecko_bgapi_class_mesh_generic_server_init();
-  //gecko_bgapi_class_mesh_vendor_model_init();
-  //gecko_bgapi_class_mesh_health_client_init();
-  //gecko_bgapi_class_mesh_health_server_init();
-  //gecko_bgapi_class_mesh_test_init();
-  //gecko_bgapi_class_mesh_lpn_init();
   gecko_bgapi_class_mesh_friend_init();
-  gecko_bgapi_class_mesh_lc_server_init();
-  gecko_bgapi_class_mesh_lc_setup_server_init();
-  gecko_bgapi_class_mesh_scene_server_init();
-  gecko_bgapi_class_mesh_scene_setup_server_init();
-}
-
-/*******************************************************************************
- * Initialize used bgapi classes for client.
- ******************************************************************************/
-void gecko_bgapi_classes_init_client_lpn(void)
-{
-	gecko_bgapi_class_dfu_init();
-	gecko_bgapi_class_system_init();
-	gecko_bgapi_class_le_gap_init();
-	gecko_bgapi_class_le_connection_init();
-	//gecko_bgapi_class_gatt_init();
-	gecko_bgapi_class_gatt_server_init();
-	gecko_bgapi_class_hardware_init();
-	gecko_bgapi_class_flash_init();
-	gecko_bgapi_class_test_init();
-	//gecko_bgapi_class_sm_init();
-	gecko_bgapi_class_mesh_node_init();
-	//gecko_bgapi_class_mesh_prov_init();
-	gecko_bgapi_class_mesh_proxy_init();
-	gecko_bgapi_class_mesh_proxy_server_init();
-	//gecko_bgapi_class_mesh_proxy_client_init();
-	gecko_bgapi_class_mesh_generic_client_init();
-	//gecko_bgapi_class_mesh_generic_server_init();
-	//gecko_bgapi_class_mesh_vendor_model_init();
-	//gecko_bgapi_class_mesh_health_client_init();
-	//gecko_bgapi_class_mesh_health_server_init();
-	//gecko_bgapi_class_mesh_test_init();
-	gecko_bgapi_class_mesh_lpn_init();
-	//gecko_bgapi_class_mesh_friend_init();
-	gecko_bgapi_class_mesh_scene_client_init();
 }

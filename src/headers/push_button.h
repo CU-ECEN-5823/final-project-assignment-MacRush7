@@ -38,8 +38,10 @@
  * External signal definitions. These are used to signal button press events
  * from GPIO interrupt handler to application.
  ******************************************************************************/
-#define EXT_SIGNAL_PB0_PRESSED		0x01
-#define EXT_SIGNAL_PB0_RELEASED		0x02
+#define EXT_SIGNAL_PB0_PRESSED		4
+#define EXT_SIGNAL_PB0_RELEASED		5
+#define EXT_SIGNAL_PB1_PRESSED		6
+#define EXT_SIGNAL_PB1_RELEASED		7
 
 ////////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES & DEFINITIONS

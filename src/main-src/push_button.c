@@ -153,12 +153,14 @@ void pushButton_IRQHandler(uint8_t pin)
 		if(GPIO_PinInGet(PB1_PORT, PB1_PIN) == 0)
 		{
 			PB1_val = BUTTON_PRESSED;
+			gecko_external_signal(EXT_SIGNAL_PB1_PRESSED);
 		}
 
 		/* PB1 Released */
 		else
 		{
 			PB1_val = BUTTON_RELEASED;
+			gecko_external_signal(EXT_SIGNAL_PB1_RELEASED);
 		}
 	}
 

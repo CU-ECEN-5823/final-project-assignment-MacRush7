@@ -62,10 +62,7 @@
 #define DISPLAY_ENABLE
 
 /* Enabled MCP9808 interface. */
-#undef MCP9808_ENABLED
-
-/* Project Titles Enabled - switches between Pub/Sub to LPN/FN */
-#define PROJECT_TITLES
+#define MCP9808_ENABLED
 
 /* Enable the LCD Display using the above #define statement. */
 #ifdef DISPLAY_ENABLE

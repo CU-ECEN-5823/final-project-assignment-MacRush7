@@ -86,8 +86,8 @@
 /* State Machine External Event States */
 
 #define GECKO_LETIMER_WAIT_FLAG				1
-#define GECKO_TEMP_I2C_WRITE_FLAG			3
-#define GECKO_TEMP_I2C_READ_FLAG			5
+#define GECKO_TEMP_I2C_WRITE_FLAG			2
+#define GECKO_TEMP_I2C_READ_FLAG			3
 
 ////////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES & DEFINITIONS

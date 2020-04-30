@@ -33,9 +33,9 @@
  * Author	: Rushi James Macwan
  ******************************************************************************/
 
-/* @file mcp9808.h
+/* @file mcp9808.c
  *
- * @brief MCP9808 High-accuracy Temperature Sensor (external) header file.
+ * @brief MCP9808 High-accuracy Temperature Sensor (external) source file.
  * # Datasheet: http://ww1.microchip.com/downloads/en/DeviceDoc/25095A.pdf
  *
  * @author Rushi James Macwan
@@ -51,10 +51,20 @@
 // FUNCTION DEFINITIONS
 ////////////////////////////////////////////////////////////////////////////////
 
+/***************************************************************************//**
+ * This function performs I2C write transaction with the MCP9808 I2C
+ * temperature sensor for sending commands for reading temperature values.
+ ******************************************************************************/
+
 void mcp9808_Write(void)
 {
 	I2C_Write(mcp9808_slave_addr, mcp9808_read_command);
 }
+
+/***************************************************************************//**
+ * This function performs I2C read transaction with the MCP9808 I2C
+ * temperature sensor for reading temperature values.
+ ******************************************************************************/
 
 void mcp9808_Read(void)
 {

@@ -36,6 +36,7 @@ enum display_row {
 	DISPLAY_ROW_LPN_ALIGHT,		// LPN - 2 (Ambient Light Sensor)
 	DISPLAY_ROW_LPN_UVLIGHT,	// LPN - 3 (UV Light Sensor)
 	DISPLAY_ROW_TEMPERATURE,	// Local MCP9808 Temperature Sensor Reports
+	DISPLAY_ROW_CONNECTIONS,	// Reports a record of existing LPN connections
 	DISPLAY_ROW_MAX,			// Max number of rows display can support
 };
 

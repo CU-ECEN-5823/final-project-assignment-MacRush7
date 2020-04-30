@@ -15,6 +15,19 @@
  *
  ******************************************************************************/
 
+/******************************************************************************
+ * ECEN 5823 IoT Embedded Firmware (Spring-2020)
+ * Project Submission
+ * Author: Rushi James Macwan
+ ******************************************************************************/
+
+/* @file ap.h
+ *
+ * @brief Application source header file.
+ *
+ * @author Rushi James Macwan
+ */
+
 #ifndef APP_H
 #define APP_H
 
@@ -23,6 +36,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "src/headers/header.h"
+#include "app_src.h"
 
 /* C Standard Library headers */
 #include <stdio.h>
@@ -83,23 +97,23 @@ extern "C" {
  ******************************************************************************/
 /* Address 0x01 will be given to the FN. */
 
-#define LPN_MOISTURE_ADDR			0x02
-#define LPN_ALIGHT_ADDR				0x03
-#define LPN_UVLIGHT_ADDR			0x04
+#define LPN_MOISTURE_ADDR				0x02
+#define LPN_ALIGHT_ADDR					0x03
+#define LPN_UVLIGHT_ADDR				0x04
 
-#define LPN_MOISTURE_SET_INDEX		0b001
-#define LPN_ALIGHT_SET_INDEX		0b010
-#define LPN_UVLIGHT_SET_INDEX		0b100
+#define LPN_MOISTURE_SET_ALARM_FLAG		0x01
+#define LPN_ALIGHT_SET_ALARM_FLAG		0x02
+#define LPN_UVLIGHT_SET_ALARM_FLAG		0x04
 
-#define LPN_MOISTURE_CLEAR_INDEX	0b110
-#define LPN_ALIGHT_CLEAR_INDEX		0b101
-#define LPN_UVLIGHT_CLEAR_INDEX		0b011
+#define LPN_MOISTURE_CLEAR_ALARM_FLAG	0xFE
+#define LPN_ALIGHT_CLEAR_ALARM_FLAG		0xFD
+#define LPN_UVLIGHT_CLEAR_ALARM_FLAG	0xFB
 
 /*******************************************************************************
  * Alarm definitions.
  ******************************************************************************/
-#define ALARM_SET		0xFFFF
-#define ALARM_CLEARED	0x7FFF
+#define ALARM_SET			0xFFFF
+#define ALARM_CLEARED		0x7FFF
 
 /*******************************************************************************
  * Flash (Persistent Data) definitions.
@@ -121,23 +135,17 @@ extern "C" {
 // GLOBAL VARIABLES & DEFINITIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-uint16_t BTM_ELEMENT_INDEX;
-uint16_t BTM_ADDRESS;
+/// handle of the last opened LE connection
+uint8_t conn_handle;
 
+/// number of active Bluetooth connections
+uint8_t num_connections;
+
+/// Flag for indicating that initialization was performed
+uint8_t boot_to_dfu;
+
+/// Alarm buffers that keeps a record of the alarms since last provisioning.
 uint8_t alarm_buffer;
-
-struct PushButton_State
-{
-	uint8_t generic_onoff_current;
-	uint8_t generic_onoff_target;
-} BTM_PB_State;
-
-struct Friend_States
-{
-	uint16_t moisture_level;
-	uint16_t alight_level;
-	uint16_t uvlight_level;
-} Friend_Stat;
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION PROTOTYPES
@@ -150,36 +158,6 @@ struct Friend_States
  * @param[in] evt     Pointer to incoming event.
  ******************************************************************************/
 void handle_ecen5823_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *evt);
-
-/*******************************************************************************
- * Other functions (some borrowed from SL BTM examples).
- ******************************************************************************/
-void gecko_ecen5823_PrintDeviceAddress(void);
-void initiate_factory_reset(void);
-void set_device_name(bd_addr *pAddr);
-void mesh_NodeInit(void);
-void gecko_Device_Reset(void);
-void LCD_clearData(void);
-void gecko_load_alarm(void);
-void gecko_store_alarm(void);
-void pushButton_EnableInt(void);
-uint8_t mesh_friend_AlarmHandler(uint16_t client_addr, bool alarm);
-
-static void mesh_friend_level_request(uint16_t model_id,
-                              uint16_t element_index,
-                              uint16_t client_addr,
-                              uint16_t server_addr,
-                              uint16_t appkey_index,
-                              const struct mesh_generic_request *request,
-                              uint32_t transition_ms,
-                              uint16_t delay_ms,
-                              uint8_t request_flags);
-
-static void mesh_friend_level_change(uint16_t model_id,
-                             uint16_t element_index,
-                             const struct mesh_generic_state *current,
-                             const struct mesh_generic_state *target,
-                             uint32_t remaining_ms);
 
 #ifdef __cplusplus
 };

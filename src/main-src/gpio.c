@@ -49,6 +49,10 @@ void gpioLed1SetOff()
 {
 	GPIO_PinOutClear(LED1_port,LED1_pin);
 }
+void gpioDisableDisplay(void)
+{
+	GPIO_PinOutClear(LCD_port, LCD_pin);
+}
 void gpioEnableDisplay(void)
 {
 	GPIO_PinOutSet(LCD_port, LCD_pin);
