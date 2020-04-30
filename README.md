@@ -40,7 +40,11 @@ The above section has been directly borrowed from the Final Project Report creat
 
 •	The firmware on the FN also allows a user to override all the alarm signals and refresh the LCD display with no alarm signals. This feature also reflects the new changes in the persistent data (i.e. alarm buffer stored in the flash memory).
 
-•	The firmware also provides support for using Generic On/Off Server Model. However, this is a separate firmware available on the “generic_on_off” branch of this repository.
+•	The firmware also provides support for using Generic On/Off Server Model. However, this is a separate firmware available on the [generic_on_off](https://github.com/CU-ECEN-5823/final-project-assignment-MacRush7/tree/generic_on_off) branch of this repository.
+
+# Source Files Included
+
+
 
 # Project Documentation References
 
