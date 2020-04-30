@@ -42,9 +42,37 @@ The above section has been directly borrowed from the Final Project Report creat
 
 •	The firmware also provides support for using Generic On/Off Server Model. However, this is a separate firmware available on the [generic_on_off](https://github.com/CU-ECEN-5823/final-project-assignment-MacRush7/tree/generic_on_off) branch of this repository.
 
+•	The firmware does not provide full DFU support and this feature has been excluded and mentioned as "NOT IMPLEMENTED" in the project validation plan.
+
 # Source Files Included
 
+_List of major source files in the src/main-src/ directory are defined below:_
 
+**cmu.c** - This is the source file for using the Clock Management Unit (CMU) available on the EFR32BG13 platform.
+
+**display.c** - This is an application source file for display support for the on-board LCD available on the EFR32BG13 platform.
+
+**gecko_mesh.c** - This is BTM source file for initializing mesh features on the node.
+
+**gpio.c** - This is the source file for GPIO support.
+
+**i2c.c** - This is the source file for running and utilizing the I2C0 peripheral available on the EFR32BG13 platform.
+
+**letimer.c** - This is the source file for running and utilizing the Low-energy timer available on the EFR32BG13 platform for various applications.
+
+**log.c** - This is the application source file for logging support.
+
+**main_app.c** - This is the main source file application code for initializing the gecko board and handling the external event state machine written for the MCP9808 temperature sensor.
+
+**mcp9808.c** - This is the source file for utilizing the external I2C sensor (MCP9808) interfaced with the EFR32BG13 platform.
+
+**pushbutton.c** - This is the source file for supporting push button interrupt handling and generating external signals in the BTM stack events.
+
+**state.c** - This is the source file that contains the entire state machine written for running the MCP9808 temperature sensor.
+
+_List of major source files in the main directory are defined below:_
+
+**app.c** - This is the source file that runs the BTM stack event handler and incorporates use of other sub-level application source files containing parts of the firmware - **app_src.c** and **app_config.c**.
 
 # Project Documentation References
 
