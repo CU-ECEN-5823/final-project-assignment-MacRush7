@@ -96,3 +96,13 @@ Link to repository containing provisioner source code             : [Mesh Provis
 
 [Abhijeet Dutt Srivastava](https://github.com/CU-ECEN-5823/final-project-assignment-KaiserS0ze)
 
+# Video Link
+
+We have recorded a brief video providing an exhaustive demo of our project with the Generic On/Off Model firmware. Please, visit the link below:
+
+[Generic On-Off Model Demo Link](https://drive.google.com/open?id=1DIoGrl6JIPHIu7_jNq90n9Pjj7FXMhYc)
+
+We had provided a brief demo of our Generic Level Model firmware during the class demonstration. However, we have not been able to acquire a video for the same at this time.
+
+Thanks for visiting this repository!
+
