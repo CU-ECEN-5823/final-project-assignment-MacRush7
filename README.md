@@ -44,6 +44,10 @@ The above section has been directly borrowed from the Final Project Report creat
 
 •	The firmware does not provide full DFU support and this feature has been excluded and mentioned as "NOT IMPLEMENTED" in the project validation plan.
 
+_All the above feature have been implemented - except as noted otherwise - and have been included in the firmware created and stored in this repository._
+
+For a detailed overview of the major source files that were created for the course assignments and/or specifically with respect to the project in addition to the major BT Mesh SDK available from SL, please visit the next section. Thanks.
+
 # Source Files Included
 
 _List of major source files in the src/main-src/ directory are defined below:_
