@@ -10,7 +10,7 @@ The project showcases an exhaustive implementation of Bluetooth Mesh network arc
 
 ***Please Note:***
 
-The above section has been directly borrowed from the Final Project Report created for this project submission. The work there is duly credited and is utilized here for providing a background reference to the project.
+_The above section has been directly borrowed from the Final Project Report created for this project submission. The work there is duly credited and is utilized here for providing a background reference to the project._
 
 # Final Project Status
 
@@ -46,7 +46,7 @@ The above section has been directly borrowed from the Final Project Report creat
 
 _All the above feature have been implemented - except as noted otherwise - and have been included in the firmware created and stored in this repository._
 
-For a detailed overview of the major source files that were created for the course assignments and/or specifically with respect to the project in addition to the major BT Mesh SDK available from SL, please visit the next section. Thanks.
+For a detailed overview of the major source files that were created for the course assignments and/or specifically with respect to the project in addition to the major BT Mesh SDK available from SL, please visit the next section.
 
 # Source Files Included
 
